@@ -1,0 +1,18 @@
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow read access to product images for everyone
+    // Allow write access for authenticated users
+    match /product-images/{allPaths=**} {
+      allow read: if true;
+      allow write, create, update, delete: if request.auth != null;
+    }
+    
+    // Allow authenticated users to upload and manage any files
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write, create, update, delete: if request.auth != null;
+    }
+  }
+}

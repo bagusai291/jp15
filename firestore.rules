@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read access to products for everyone, write/delete for authenticated users
+    match /products/{productId} {
+      allow read: if true;
+      allow write, create, update, delete: if request.auth != null;
+    }
+    
+    // Allow authenticated users to read all users, but only write to their own data
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write, create, update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+    
+    // Allow anyone to create orders, authenticated users to read their own orders, and admins to access all orders
+    match /orders/{orderId} {
+      allow read, list: if request.auth != null && (isAdmin() || resource.data.user_id == request.auth.uid);
+      allow create: if true; // Allow anyone to create orders
+      allow update, delete: if request.auth != null && (isAdmin() || resource.data.user_id == request.auth.uid);
+    }
+    
+    // AFFILIATE COLLECTIONS - FULLY PERMISSIVE
+    // Allow anyone to read/write affiliate referrals
+    match /affiliate_referrals/{referralId} {
+      allow read, write, create, update, delete: if true;
+    }
+    
+    // Allow anyone to read/write affiliate commissions
+    match /affiliate_commissions/{commissionId} {
+      allow read, write, create, update, delete: if true;
+    }
+    
+    // Allow anyone to read/write affiliate settings
+    match /affiliate_settings/{settingId} {
+      allow read, write, create, update, delete: if true;
+    }
+
+    // Allow anyone to read/write affiliate payouts
+    match /affiliate_payouts/{payoutId} {
+      allow read, write, create, update, delete: if true;
+    }
+    
+    // Allow anyone to read/write affiliates collection
+    match /affiliates/{affiliateId} {
+      allow read, write, create, update, delete: if true;
+    }
+    
+    // Allow authenticated users to access recycle bin with full permissions
+    match /recycle_bin/{itemId} {
+      allow write, create, update, delete: if request.auth != null;
+    }
+    
+    // Allow authenticated users to manage admin logs
+    match /admin_logs/{logId} {
+      allow read, write, create, update, delete: if request.auth != null;
+    }
+    
+    // Allow authenticated users to manage shipping rates
+    match /shipping_rates/{rateId} {
+      allow read: if true;
+      allow write, create, update, delete: if request.auth != null;
+    }
+
+    // Allow anyone to create payment proofs
+    // Admins can read, write, delete all payment proofs
+    match /payment_proofs/{paymentProofId} {
+      allow read, create: if true;
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Allow POS transactions to be read/written by authenticated users (admins only for financial reports)
+    match /pos_transactions/{transactionId} {
+      allow read, list: if request.auth != null && isAdmin();
+      allow write, create, update, delete: if request.auth != null;
+    }
+    
+    // Allow access to financial data collections for admins
+    match /financial_transactions/{transactionId} {
+      allow read, list, write, create, update, delete: if request.auth != null && isAdmin();
+    }
+    
+    // Allow access to daily sales data for admins
+    match /daily_sales/{dateId} {
+      allow read, list, write, create, update, delete: if request.auth != null && isAdmin();
+    }
+    
+    // Allow access to monthly financial data for admins
+    match /monthly_financial_data/{monthId} {
+      allow read, list, write, create, update, delete: if request.auth != null && isAdmin();
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+        (request.auth.token.email == 'admin@gmail.com' || 
+         request.auth.token.email == 'ari4rich@gmail.com' ||
+         request.auth.token.email == 'newadmin@gmail.com' ||
+         request.auth.token.email == 'injpn@food.com');
+    }
+  }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Injapan Food - Makanan Indonesia di Jepang</title>
+    <meta name="description" content="Toko online makanan khas Indonesia untuk komunitas Indonesia di Jepang" />
+    <meta name="author" content="Injapan Food" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#b91c1c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
+
+    <meta property="og:title" content="Injapan Food - Makanan Indonesia di Jepang" />
+    <meta property="og:description" content="Toko online makanan khas Indonesia untuk komunitas Indonesia di Jepang" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://injapanfood.com/logo.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://injapanfood.com/logo.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Add error recovery for blank screens
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // Check if the page is blank after a short delay
+          setTimeout(() => {
+            // If the root element is empty, the app didn't render properly
+            const rootElement = document.getElementById('root');
+            if (rootElement && (!rootElement.children || rootElement.children.length === 0)) {
+              console.error('Detected blank page, attempting recovery...');
+              
+              // Clear potentially corrupted caches
+              try {
+                // Clear React Query cache
+                Object.keys(localStorage).forEach(key => {
+                  if (key.startsWith('rq-')) {
+                    localStorage.removeItem(key);
+                  }
+                });
+                
+                // Clear service worker caches
+                if ('caches' in window) {
+                  caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => {
+                      caches.delete(cacheName);
+                    });
+                  });
+                }
+                
+                // Unregister service workers
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                  for (let registration of registrations) {
+                    registration.unregister();
+                  }
+                });
+                
+                // Reload the page
+                window.location.reload();
+              } catch (err) {
+                console.error('Error during recovery:', err);
+                
+                // Show a minimal UI if recovery fails
+                document.body.innerHTML = `
+                  <div style="padding: 20px; font-family: sans-serif;">
+                    <h2>Something went wrong</h2>
+                    <p>The application encountered an error. Please try refreshing the page.</p>
+                    <button onclick="window.location.reload()" style="padding: 8px 16px; background: #b91c1c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                      Refresh Page
+                    </button>
+                  </div>
+                `;
+              }
+            }
+          }, 3000); // Check after 3 seconds
+          
+          // Track page load success
+          if (document.readyState === 'complete') {
+            console.log('Page loaded successfully');
+            localStorage.setItem('lastSuccessfulLoad', Date.now().toString());
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
