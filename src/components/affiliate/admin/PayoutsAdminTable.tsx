@@ -56,7 +56,6 @@ const PayoutsAdminTable = () => {
       case 'pending':
         return <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">Pending</Badge>;
       case 'processing':
-     paid: { color: 'bg-green-500 text-white', icon: DollarSign, label: 'Telah Dibayarkan' },
         return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Diproses</Badge>;
       case 'completed':
         return <Badge className="bg-green-500">Selesai</Badge>;
