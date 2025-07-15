@@ -1,4 +1,3 @@
-
 {
   "nav": {
     "home": "Beranda",
@@ -244,7 +243,7 @@
     "accountHolderName": "Nama Pemilik Rekening",
     "available": "Tersedia:",
     "minimum": "Minimum:",
-    "requestPayoutButton": "Ajukan Pencairan"
+    "requestPayoutButton": "Ajukan Pencairan",
    "totalClicks": "Total Klik",
    "clicksDescription": "Jumlah klik pada link affiliate",
    "totalReferrals": "Total Referral",
