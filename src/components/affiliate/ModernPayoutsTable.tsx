@@ -292,7 +292,7 @@ const ModernPayoutsTable = () => {
                       {payout.completedAt ? (
                         <div className="flex items-center">
                           <Calendar className="w-4 h-4 text-gray-400 mr-1.5" />
-                          <span>{formatDate(payout.completedAt)}</span>
+                         <span>{payout.status === 'paid' ? formatDate(payout.paidAt) : formatDate(payout.completedAt)}</span>
                         </div>
                       ) : (
                         <span className="text-gray-400">-</span>

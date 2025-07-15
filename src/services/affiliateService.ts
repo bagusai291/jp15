@@ -976,7 +976,9 @@ export const processPayout = async (
         updatedAt: new Date().toISOString()
       });
       } else if (status === 'paid') {
-        updateData.paidAt = new Date().toISOString();
+        const now = new Date().toISOString();
+        updateData.paidAt = now;
+        updateData.completedAt = updateData.completedAt || now; // Ensure completedAt is set if not already
         updateData.paidBy = adminId;
         
         // Update affiliate stats - ensure commission is marked as paid

@@ -135,7 +135,9 @@ const PayoutsTable = () => {
                       {formatDate(payout.requestedAt)}
                     </TableCell>
                     <TableCell className="text-sm text-gray-500">
-                     {payout.paidAt ? formatDate(payout.paidAt) : formatDate(payout.completedAt)}
+                     {payout.status === 'paid' ? formatDate(payout.paidAt) : 
+                      payout.status === 'completed' ? formatDate(payout.completedAt) : 
+                      '-'}
                     </TableCell>
                   </TableRow>
                 ))}
