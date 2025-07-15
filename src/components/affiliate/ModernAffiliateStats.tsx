@@ -32,7 +32,7 @@ const ModernAffiliateStats = () => {
 
   const stats = [
     {
-      title: t('affiliate.totalClicks'),
+      title: 'Total Klik',
       value: affiliate.totalClicks,
       icon: TrendingUp,
       color: 'bg-blue-500',
@@ -40,10 +40,10 @@ const ModernAffiliateStats = () => {
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-100',
       growth: 8.2, // Mock data
-      description: t('affiliate.clicksDescription') || 'Number of clicks on your affiliate link'
+      description: 'Jumlah klik pada link affiliate'
     },
     {
-      title: t('affiliate.totalReferrals'),
+      title: 'Total Referral',
       value: affiliate.totalReferrals,
       icon: Users,
       color: 'bg-green-500',
@@ -51,10 +51,10 @@ const ModernAffiliateStats = () => {
       bgColor: 'bg-green-50',
       borderColor: 'border-green-100',
       growth: 5.3, // Mock data
-      description: t('affiliate.referralsDescription') || 'Users who registered through your link'
+      description: 'Jumlah pengguna yang mendaftar'
     },
     {
-      title: t('affiliate.pendingCommission'),
+      title: 'Komisi Pending',
       value: `¥${affiliate.pendingCommission.toLocaleString()}`,
       icon: Clock,
       color: 'bg-amber-500',
@@ -62,10 +62,10 @@ const ModernAffiliateStats = () => {
       bgColor: 'bg-amber-50',
       borderColor: 'border-amber-100',
       growth: 0, // No growth for pending
-      description: t('affiliate.pendingDescription') || 'Commission awaiting approval'
+      description: 'Komisi yang belum dibayarkan'
     },
     {
-      title: t('affiliate.totalCommission'),
+      title: 'Total Komisi',
       value: `¥${affiliate.totalCommission.toLocaleString()}`,
       icon: DollarSign,
       color: 'bg-purple-500',
@@ -73,7 +73,7 @@ const ModernAffiliateStats = () => {
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-100',
       growth: commissionGrowth,
-      description: t('affiliate.commissionDescription') || 'Total commission earned'
+      description: 'Total komisi yang didapatkan'
     }
   ];
 

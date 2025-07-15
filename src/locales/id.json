@@ -245,6 +245,14 @@
     "available": "Tersedia:",
     "minimum": "Minimum:",
     "requestPayoutButton": "Ajukan Pencairan"
+   "totalClicks": "Total Klik",
+   "clicksDescription": "Jumlah klik pada link affiliate",
+   "totalReferrals": "Total Referral",
+   "referralsDescription": "Jumlah pengguna yang mendaftar",
+   "pendingCommission": "Komisi Pending",
+   "pendingDescription": "Komisi yang belum dibayarkan",
+   "totalCommission": "Total Komisi",
+   "commissionDescription": "Total komisi yang didapatkan"
   },
   "orders": {
     "title": "Riwayat Pesanan",

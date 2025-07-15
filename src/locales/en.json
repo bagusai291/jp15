@@ -256,6 +256,14 @@
     "available": "Available:",
     "minimum": "Minimum:",
     "requestPayoutButton": "Request Payout"
+   "totalClicks": "Total Clicks",
+   "clicksDescription": "Number of clicks on your affiliate link",
+   "totalReferrals": "Total Referrals",
+   "referralsDescription": "Users who registered through your link",
+   "pendingCommission": "Pending Commission",
+   "pendingDescription": "Commission awaiting approval",
+   "totalCommission": "Total Commission",
+   "commissionDescription": "Total commission earned"
   },
   "orders": {
     "title": "Order History",
