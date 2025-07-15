@@ -53,8 +53,6 @@ const AffiliateContent = () => {
             <TabsTrigger value="referrals">Referrals</TabsTrigger>
             <TabsTrigger value="commissions">Commissions</TabsTrigger>
             <TabsTrigger value="payouts">Payouts</TabsTrigger>
-            <TabsTrigger value="materials">Promotion Materials</TabsTrigger>
-            <TabsTrigger value="faq">FAQ & Help</TabsTrigger>
           </TabsList>
           
           {/* Dashboard Tab */}
@@ -84,15 +82,6 @@ const AffiliateContent = () => {
             <ModernPayoutsTable />
           </TabsContent>
           
-          {/* Promotion Materials Tab */}
-          <TabsContent value="materials">
-            <AffiliatePromotionMaterials />
-          </TabsContent>
-          
-          {/* FAQ Tab */}
-          <TabsContent value="faq">
-            <AffiliateFAQ />
-          </TabsContent>
         </Tabs>
       </div>
       <Footer />
