@@ -100,7 +100,7 @@ export interface AffiliatePayout {
   affiliateId: string;
   amount: number;
   method: string;
-  status: 'pending' | 'processing' | 'completed' | 'rejected';
+  status: 'pending' | 'processing' | 'completed' | 'rejected' | 'paid';
   bankInfo?: {
     bankName: string;
     accountNumber: string;
@@ -109,9 +109,11 @@ export interface AffiliatePayout {
   requestedAt: string;
   processedAt?: string;
   completedAt?: string;
+  paidAt?: string;
   rejectedAt?: string;
   processedBy?: string;
   completedBy?: string;
+  paidBy?: string;
   rejectedBy?: string;
   notes?: string;
 }

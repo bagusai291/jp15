@@ -932,7 +932,7 @@ export const requestPayout = async (
 export const processPayout = async (
   payoutId: string,
   adminId: string,
-  status: 'processing' | 'completed' | 'rejected',
+  status: 'processing' | 'completed' | 'rejected' | 'paid',
   notes?: string
 ): Promise<void> => {
   try {
@@ -953,6 +953,10 @@ export const processPayout = async (
       throw new Error('Payout is not in processing status');
     }
     
+   if ((payout.status !== 'processing' && payout.status !== 'completed') && status === 'paid') {
+     throw new Error('Payout must be in processing or completed status to be marked as paid');
+   }
+   
     const updateData: any = {
       status,
       notes,
@@ -971,6 +975,15 @@ export const processPayout = async (
         paidCommission: increment(payout.amount),
         updatedAt: new Date().toISOString()
       });
+   } else if (status === 'paid') {
+     updateData.paidAt = new Date().toISOString();
+     updateData.paidBy = adminId;
+     
+     // Update affiliate stats - ensure commission is marked as paid
+     await updateDoc(doc(db, AFFILIATES_COLLECTION, payout.affiliateId), {
+       paidCommission: increment(payout.amount),
+       updatedAt: new Date().toISOString()
+     });
     } else if (status === 'rejected') {
       updateData.rejectedAt = new Date().toISOString();
       updateData.rejectedBy = adminId;

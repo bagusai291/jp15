@@ -91,7 +91,7 @@ const ModernCommissionsTable = () => {
       case 'rejected':
         return <Badge variant="destructive">Rejected</Badge>;
       case 'paid':
-        return <Badge className="bg-primary">Paid</Badge>;
+       return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
       default:
         return <Badge variant="outline">Unknown</Badge>;
     }

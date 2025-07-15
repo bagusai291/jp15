@@ -97,6 +97,8 @@ const ModernPayoutsTable = () => {
         return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Processing</Badge>;
       case 'completed':
         return <Badge className="bg-green-500">Completed</Badge>;
+     case 'paid':
+       return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Rejected</Badge>;
       default:
@@ -345,6 +347,12 @@ const ModernPayoutsTable = () => {
                                       <span>{formatDate(selectedPayout.completedAt)}</span>
                                     </div>
                                   )}
+                                 {selectedPayout.paidAt && (
+                                   <div className="flex justify-between">
+                                     <span className="text-gray-600">Dibayarkan:</span>
+                                     <span>{formatDate(selectedPayout.paidAt)}</span>
+                                   </div>
+                                 )}
                                 </div>
                               </div>
                               

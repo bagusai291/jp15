@@ -357,7 +357,7 @@ export const AffiliateAdminProvider = ({ children }: { children: React.ReactNode
   // Process payout
   const processPayoutFn = async (
     payoutId: string, 
-    status: 'processing' | 'completed' | 'rejected',
+   status: 'processing' | 'completed' | 'rejected' | 'paid',
     notes?: string
   ) => {
     if (!user) {

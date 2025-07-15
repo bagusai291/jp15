@@ -40,6 +40,8 @@ const PayoutsTable = () => {
         return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Diproses</Badge>;
       case 'completed':
         return <Badge className="bg-green-500">Selesai</Badge>;
+     case 'paid':
+       return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Ditolak</Badge>;
       default:
@@ -133,7 +135,7 @@ const PayoutsTable = () => {
                       {formatDate(payout.requestedAt)}
                     </TableCell>
                     <TableCell className="text-sm text-gray-500">
-                      {formatDate(payout.completedAt)}
+                     {payout.paidAt ? formatDate(payout.paidAt) : formatDate(payout.completedAt)}
                     </TableCell>
                   </TableRow>
                 ))}

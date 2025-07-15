@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Search, CreditCard, RefreshCw, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Search, CreditCard, RefreshCw, CheckCircle, XCircle, Clock, DollarSign } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { 
   Select,
@@ -56,9 +56,12 @@ const PayoutsAdminTable = () => {
       case 'pending':
         return <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">Pending</Badge>;
       case 'processing':
+     paid: { color: 'bg-green-500 text-white', icon: DollarSign, label: 'Telah Dibayarkan' },
         return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Diproses</Badge>;
       case 'completed':
         return <Badge className="bg-green-500">Selesai</Badge>;
+     case 'paid':
+       return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Ditolak</Badge>;
       default:
@@ -230,7 +233,7 @@ const PayoutsAdminTable = () => {
                         {formatDate(payout.requestedAt)}
                       </TableCell>
                       <TableCell className="text-sm text-gray-500">
-                        {formatDate(payout.completedAt)}
+                       {payout.paidAt ? formatDate(payout.paidAt) : formatDate(payout.completedAt)}
                       </TableCell>
                       <TableCell className="text-right">
                         {isPending && (
@@ -341,6 +344,58 @@ const PayoutsAdminTable = () => {
                               </AlertDialogContent>
                             </AlertDialog>
                             
+                           <AlertDialog>
+                             <AlertDialogTrigger asChild>
+                               <Button
+                                 variant="outline"
+                                 size="sm"
+                                 disabled={isProcessing}
+                                 className="bg-green-500 text-white border-green-600 hover:bg-green-600"
+                                 onClick={() => {
+                                   setSelectedPayoutId(payout.id);
+                                   setSelectedAction('paid');
+                                 }}
+                               >
+                                 <DollarSign className="w-4 h-4 mr-1" />
+                                 Dibayarkan
+                               </Button>
+                             </AlertDialogTrigger>
+                             <AlertDialogContent>
+                               <AlertDialogHeader>
+                                 <AlertDialogTitle>Tandai Sebagai Dibayarkan</AlertDialogTitle>
+                                 <AlertDialogDescription>
+                                   Apakah Anda yakin ingin menandai pencairan ini sebagai telah dibayarkan? Status akan berubah menjadi "Telah Dibayarkan".
+                                 </AlertDialogDescription>
+                               </AlertDialogHeader>
+                               <div className="py-4">
+                                 <label className="text-sm font-medium text-gray-700">
+                                   Catatan Pembayaran (Opsional)
+                                 </label>
+                                 <Textarea
+                                   value={notes}
+                                   onChange={(e) => setNotes(e.target.value)}
+                                   placeholder="Masukkan detail pembayaran seperti nomor referensi, tanggal transfer, dll."
+                                   className="mt-2"
+                                 />
+                               </div>
+                               <AlertDialogFooter>
+                                 <AlertDialogCancel onClick={() => {
+                                   setSelectedPayoutId(null);
+                                   setSelectedAction(null);
+                                   setNotes('');
+                                 }}>
+                                   Batal
+                                 </AlertDialogCancel>
+                                 <AlertDialogAction
+                                   onClick={handleProcessPayout}
+                                   className="bg-green-600 hover:bg-green-700"
+                                 >
+                                   Konfirmasi Pembayaran
+                                 </AlertDialogAction>
+                               </AlertDialogFooter>
+                             </AlertDialogContent>
+                           </AlertDialog>
+                           
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button
@@ -399,6 +454,7 @@ const PayoutsAdminTable = () => {
                         {!isPending && !isProcessing && (
                           <span className="text-xs text-gray-500">
                             {payout.status === 'completed' ? 'Selesai' : 
+                            payout.status === 'paid' ? 'Telah Dibayarkan' :
                              payout.status === 'rejected' ? 'Ditolak' : '-'}
                           </span>
                         )}
