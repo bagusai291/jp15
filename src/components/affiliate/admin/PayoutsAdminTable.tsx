@@ -59,8 +59,8 @@ const PayoutsAdminTable = () => {
         return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Diproses</Badge>;
       case 'completed':
         return <Badge className="bg-green-500">Selesai</Badge>;
-     case 'paid':
-       return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
+      case 'paid':
+        return <Badge className="bg-green-600">Telah Dibayarkan</Badge>;
       case 'rejected':
         return <Badge variant="destructive">Ditolak</Badge>;
       default:
@@ -289,14 +289,13 @@ const PayoutsAdminTable = () => {
                           </AlertDialog>
                         )}
                         
-                        {isProcessing && (
+                        {payout.status === 'processing' && (
                           <div className="flex justify-end space-x-2">
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  disabled={isProcessing}
                                   className="bg-green-50 text-green-700 border-green-200 hover:bg-green-100"
                                   onClick={() => {
                                     setSelectedPayoutId(payout.id);
@@ -348,7 +347,6 @@ const PayoutsAdminTable = () => {
                                <Button
                                  variant="outline"
                                  size="sm"
-                                 disabled={isProcessing}
                                  className="bg-green-500 text-white border-green-600 hover:bg-green-600"
                                  onClick={() => {
                                    setSelectedPayoutId(payout.id);
@@ -400,7 +398,6 @@ const PayoutsAdminTable = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  disabled={isProcessing}
                                   className="bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
                                   onClick={() => {
                                     setSelectedPayoutId(payout.id);
@@ -450,7 +447,7 @@ const PayoutsAdminTable = () => {
                           </div>
                         )}
                         
-                        {!isPending && !isProcessing && (
+                        {!isPending && payout.status !== 'processing' && (
                           <span className="text-xs text-gray-500">
                             {payout.status === 'completed' ? 'Selesai' : 
                             payout.status === 'paid' ? 'Telah Dibayarkan' :
